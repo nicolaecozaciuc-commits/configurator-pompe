@@ -5,83 +5,305 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurator Pompe de Căldură</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; line-height: 1.6; }
-        .configurator-container { max-width: 800px; margin: 0 auto; background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); }
+        /* CSS pentru Design și Funcționalitate */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .configurator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
         h2 { text-align: center; color: #333; margin-bottom: 30px; }
         h3 { color: #007bff; margin-top: 0; }
-        .progress-bar { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; padding: 0 10px; }
-        .progress-bar::before { content: ''; position: absolute; top: 50%; left: 10px; right: 10px; height: 4px; background-color: #e0e0e0; transform: translateY(-50%); z-index: 0; }
-        .step-dot { width: 30px; height: 30px; border-radius: 50%; background-color: #ccc; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 1; transition: background-color 0.3s; cursor: default; border: 2px solid #fff; font-size: 14px; }
-        .step-dot.active { background-color: #007bff; transform: scale(1.1); }
-        .step-dot.done { background-color: #28a745; cursor: pointer; }
-        .step-content { animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .card-option { border: 1px solid #ccc; padding: 15px; margin-bottom: 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background-color: #f9f9f9; }
-        .card-option:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transform: translateY(-2px); }
-        .card-option.selected { border-color: #007bff; background-color: #e7f4ff; box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); }
-        .card-option h4 { margin: 0 0 5px 0; color: #007bff; }
-        .card-option p { margin: 0; font-size: 0.95em; color: #555; }
-        .button-group { margin-top: 30px; display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
-        .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px; transition: background-color 0.2s; }
-        .btn:disabled { background-color: #ccc; cursor: not-allowed; }
-        .btn-primary { background-color: #007bff; color: white; }
-        .btn-primary:hover:not(:disabled) { background-color: #0056b3; filter: brightness(90%); }
-        .btn-secondary { background-color: #6c757d; color: white; margin-right: auto; }
-        .btn-secondary:hover:not(:disabled) { background-color: #5a6268; }
-        .alert-info { padding: 12px; margin-top: 15px; background-color: #e9ecef; border-left: 4px solid #17a2b8; border-radius: 4px; font-size: 0.9em; }
-        .result-box { background-color: #f8fbff; border: 1px solid #cce5ff; padding: 25px; border-radius: 10px; margin-top: 20px; }
-        .power-display { font-size: 2em; color: #007bff; font-weight: bold; text-align: center; margin: 20px 0; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .result-detail { margin-top: 20px; padding: 15px; background-color: #fff; border-radius: 8px; border-left: 4px solid #007bff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 10px;
+        }
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            height: 4px;
+            background-color: #e0e0e0;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        .step-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ccc;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 1;
+            transition: background-color 0.3s;
+            cursor: default;
+            border: 2px solid #fff;
+            font-size: 14px;
+        }
+        .step-dot.active {
+            background-color: #007bff;
+            transform: scale(1.1);
+        }
+        .step-dot.done {
+            background-color: #28a745;
+            cursor: pointer;
+        }
+        
+        .step-content {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-option {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: #f9f9f9;
+        }
+        .card-option:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .card-option.selected {
+            border-color: #007bff;
+            background-color: #e7f4ff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+        .card-option h4 {
+            margin: 0 0 5px 0;
+            color: #007bff;
+        }
+        .card-option p {
+            margin: 0;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0056b3;
+            filter: brightness(90%);
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-right: auto;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+        }
+
+        .alert-info {
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #e9ecef;
+            border-left: 4px solid #17a2b8;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .result-box {
+            background-color: #f8fbff;
+            border: 1px solid #cce5ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .power-display {
+            font-size: 2em;
+            color: #007bff;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .result-detail {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
         .result-detail h4 { margin-top: 0; margin-bottom: 10px; }
         .result-detail p { margin: 5px 0; font-size: 0.95em; }
-        .climatic-zone-map { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
-        .zone-card { padding: 15px; border-radius: 8px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; }
+
+        .climatic-zone-map {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .zone-card {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
         .zone-card:hover { transform: translateY(-3px); }
         .zone-card.selected { border-color: #333; transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
         .zone-I { background-color: #e8f5e9; color: #1b5e20; }
         .zone-II { background-color: #fffde7; color: #f57f17; }
         .zone-III { background-color: #ffebee; color: #b71c1c; }
         .zone-IV { background-color: #e3f2fd; color: #0d47a1; }
         .zone-V { background-color: #f3e5f5; color: #4a148c; }
-        .dimension-group { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+
+        .dimension-group {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
         .dimension-group h4 { margin-top: 0; color: #555; }
         .floor-heating-group { border-left: 5px solid #28a745; background-color: #f2fff2; }
         .radiator-heating-group { border-left: 5px solid #ffc107; background-color: #fffbf2; }
+
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; box-sizing: border-box; }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
         .form-control:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 2px rgba(0,123,255,0.25); }
-        .city-selector { margin-bottom: 25px; padding: 15px; background: #e7f1ff; border-radius: 8px; border: 1px solid #b8daff; }
-        .city-selector select { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #007bff; font-size: 16px; font-weight: bold; color: #333; cursor: pointer; }
-        @media (max-width: 600px) { .configurator-container { padding: 15px; } .climatic-zone-map { grid-template-columns: 1fr; } .button-group { flex-direction: column-reverse; } .btn { width: 100%; margin: 5px 0; } }
+
+        .city-selector {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #e7f1ff;
+            border-radius: 8px;
+            border: 1px solid #b8daff;
+        }
+        
+        .city-selector select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #007bff;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .configurator-container { padding: 15px; }
+            .climatic-zone-map { grid-template-columns: 1fr; }
+            .button-group { flex-direction: column-reverse; }
+            .btn { width: 100%; margin: 5px 0; }
+        }
     </style>
 </head>
 <body>
+
 <div class="configurator-container" id="heat_pump_configurator">
     <h2>Configurator Pompe de Căldură</h2>
+    
     <div class="progress-bar" id="progress_bar"></div>
+
     <div id="step_container" class="step-content"></div>
 </div>
+
 <script>
     const stepContainer = document.getElementById('step_container');
     const progressBar = document.getElementById('progress_bar');
+
     let currentStep = 1;
+    const totalSteps = 9;
+
     let config = {
-        buildingType: null, city: "", climaticZone: null, electricConnection: null, systemType: null, heatingSystem: null,
-        floorArea: 0, radiatorArea: 0, radiatorHeight: 2.7, insulation: null, windowArea: null, windowType: null,
-        domesticHotWater: false, cooling: false, calculatedPower: 0
+        buildingType: null,
+        city: "",
+        climaticZone: null,
+        electricConnection: null,
+        systemType: null,
+        heatingSystem: null,
+        floorArea: 0,
+        radiatorArea: 0,
+        radiatorHeight: 2.7,
+        insulation: null,
+        windowArea: null,
+        windowType: null,
+        domesticHotWater: false,
+        cooling: false,
+        calculatedPower: 0
     };
+
     const CITY_ZONES = {
         'Constanța': 'Zona I', 'Mangalia': 'Zona I', 'Tulcea': 'Zona I',
-        'Timișoara': 'Zona II', 'Arad': 'Zona II', 'Oradea': 'Zona II', 'Craiova': 'Zona II', 'Drobeta-Turnu Severin': 'Zona II', 'Reșița': 'Zona II', 
-        'Târgu Jiu': 'Zona II', 'Slatina': 'Zona II', 'Alexandria': 'Zona II', 'Giurgiu': 'Zona II', 'Călărași': 'Zona II', 'Slobozia': 'Zona II', 
+        'Timișoara': 'Zona II', 'Arad': 'Zona II', 'Oradea': 'Zona II', 
+        'Craiova': 'Zona II', 'Drobeta-Turnu Severin': 'Zona II', 'Reșița': 'Zona II', 
+        'Târgu Jiu': 'Zona II', 'Slatina': 'Zona II', 'Alexandria': 'Zona II', 
+        'Giurgiu': 'Zona II', 'Călărași': 'Zona II', 'Slobozia': 'Zona II', 
         'Brăila': 'Zona II', 'Galați': 'Zona II',
-        'București': 'Zona III', 'Ploiești': 'Zona III', 'Pitești': 'Zona III', 'Târgoviște': 'Zona III', 'Buzău': 'Zona III', 'Focșani': 'Zona III', 
-        'Bacău': 'Zona III', 'Iași': 'Zona III', 'Vaslui': 'Zona III', 'Deva': 'Zona III', 'Alba Iulia': 'Zona III', 'Suceava': 'Zona III',
-        'Cluj-Napoca': 'Zona IV', 'Târgu Mureș': 'Zona IV', 'Sibiu': 'Zona IV', 'Brașov': 'Zona IV', 'Sfântu Gheorghe': 'Zona IV', 'Bistrița': 'Zona IV', 
-        'Zalău': 'Zona IV', 'Satu Mare': 'Zona IV', 'Baia Mare': 'Zona IV', 'Piatra Neamț': 'Zona IV', 'Botoșani': 'Zona IV', 'Rădăuți': 'Zona IV',
+        'București': 'Zona III', 'Ploiești': 'Zona III', 'Pitești': 'Zona III', 
+        'Târgoviște': 'Zona III', 'Buzău': 'Zona III', 'Focșani': 'Zona III', 
+        'Bacău': 'Zona III', 'Iași': 'Zona III', 'Vaslui': 'Zona III', 
+        'Deva': 'Zona III', 'Alba Iulia': 'Zona III', 'Suceava': 'Zona III',
+        'Cluj-Napoca': 'Zona IV', 'Târgu Mureș': 'Zona IV', 'Sibiu': 'Zona IV', 
+        'Brașov': 'Zona IV', 'Sfântu Gheorghe': 'Zona IV', 'Bistrița': 'Zona IV', 
+        'Zalău': 'Zona IV', 'Satu Mare': 'Zona IV', 'Baia Mare': 'Zona IV', 
+        'Piatra Neamț': 'Zona IV', 'Botoșani': 'Zona IV', 'Rădăuți': 'Zona IV',
         'Miercurea Ciuc': 'Zona V', 'Vatra Dornei': 'Zona V', 'Toplița': 'Zona V'
     };
+
     const THERMAL_NEED_M2 = {
         'Zona I': { 'Slabă': 80, 'Medie': 60, 'Bună': 45, 'Excelentă': 30 },
         'Zona II': { 'Slabă': 90, 'Medie': 70, 'Bună': 50, 'Excelentă': 35 },
@@ -89,6 +311,7 @@
         'Zona IV': { 'Slabă': 110, 'Medie': 90, 'Bună': 70, 'Excelentă': 45 },
         'Zona V': { 'Slabă': 120, 'Medie': 100, 'Bună': 80, 'Excelentă': 50 }
     };
+
     const THERMAL_NEED_M3 = {
         'Zona I': { 'Slabă': 35, 'Medie': 25, 'Bună': 20, 'Excelentă': 15 },
         'Zona II': { 'Slabă': 40, 'Medie': 30, 'Bună': 22, 'Excelentă': 17 },
@@ -96,59 +319,102 @@
         'Zona IV': { 'Slabă': 50, 'Medie': 40, 'Bună': 28, 'Excelentă': 20 },
         'Zona V': { 'Slabă': 55, 'Medie': 45, 'Bună': 32, 'Excelentă': 22 }
     };
+
     const WINDOW_FACTOR = {
         'Mică-Triplu': 1.05, 'Medie-Triplu': 1.10, 'Mare-Triplu': 1.15,
         'Mică-Dublu modern': 1.08, 'Medie-Dublu modern': 1.15, 'Mare-Dublu modern': 1.22,
         'Mică-Dublu vechi': 1.15, 'Medie-Dublu vechi': 1.28, 'Mare-Dublu vechi': 1.38,
         'Mică-Simplu': 1.25, 'Medie-Simplu': 1.40, 'Mare-Simplu': 1.50
     };
+
     function renderProgressBar() {
         progressBar.innerHTML = '';
         for (let i = 1; i <= 8; i++) {
             const dot = document.createElement('div');
             dot.className = 'step-dot';
-            if (i < currentStep) { dot.classList.add('done'); dot.onclick = () => setStep(i); }
-            else if (i === currentStep) dot.classList.add('active');
+            if (i < currentStep) {
+                dot.classList.add('done');
+                dot.onclick = () => setStep(i);
+            } else if (i === currentStep) {
+                dot.classList.add('active');
+            }
             dot.textContent = i;
             progressBar.appendChild(dot);
         }
     }
+
     function createCard(key, value, label, details, zoneClass = '') {
         const isSelected = config[key] === value;
         const detailsHtml = details ? `<p>${details}</p>` : '';
-        return `<div class="card-option ${isSelected ? 'selected' : ''} ${zoneClass}" onclick="setConfig('${key}', '${value}')"><h4>${label}</h4>${detailsHtml}</div>`;
+        return `
+            <div class="card-option ${isSelected ? 'selected' : ''} ${zoneClass}" onclick="setConfig('${key}', '${value}')">
+                <h4>${label}</h4>
+                ${detailsHtml}
+            </div>
+        `;
     }
+
     function createInput(key, label, placeholder, isFloat = false, min = 0) {
         const val = (config[key] !== undefined && config[key] !== null) ? config[key] : '';
-        return `<div class="form-group"><label>${label}</label><input type="number" class="form-control" value="${val}" placeholder="${placeholder}" min="${min}" step="${isFloat ? '0.1' : '1'}" oninput="setConfigInput('${key}', this.value, ${isFloat})"></div>`;
+        return `
+            <div class="form-group">
+                <label>${label}</label>
+                <input type="number" class="form-control" value="${val}" placeholder="${placeholder}" min="${min}" step="${isFloat ? '0.1' : '1'}" oninput="setConfigInput('${key}', this.value, ${isFloat})">
+            </div>
+        `;
     }
+
     window.setConfig = function(key, value) {
         config[key] = value;
         if(key === 'climaticZone') {
             const currentCityZone = CITY_ZONES[config.city];
-            if(currentCityZone !== value) { config.city = ""; const select = document.getElementById('citySelect'); if(select) select.value = ""; }
+            if(currentCityZone !== value) {
+                config.city = ""; 
+                const select = document.getElementById('citySelect');
+                if(select) select.value = "";
+            }
         }
         renderStep();
     }
+
     window.setCity = function(cityName) {
         config.city = cityName;
-        if (cityName && CITY_ZONES[cityName]) config.climaticZone = CITY_ZONES[cityName];
+        if (cityName && CITY_ZONES[cityName]) {
+            config.climaticZone = CITY_ZONES[cityName];
+        }
         renderStep();
     }
-    window.toggleConfig = function(key) { config[key] = !config[key]; renderStep(); }
-    window.setConfigInput = function(key, value, isFloat) {
-        config[key] = value === '' ? 0 : (isFloat ? parseFloat(value) : parseInt(value));
-        updateUIState();
+
+    window.toggleConfig = function(key) {
+        config[key] = !config[key];
+        renderStep();
     }
+
+    window.setConfigInput = function(key, value, isFloat) {
+        if (value === '') {
+             config[key] = 0;
+        } else {
+             config[key] = isFloat ? parseFloat(value) : parseInt(value);
+        }
+        updateUIState(); 
+    }
+
     function updateUIState() {
         const isValid = validateStep(currentStep);
         const btnNext = document.getElementById('btn-next');
-        if (btnNext) btnNext.disabled = !isValid;
+        if (btnNext) {
+            btnNext.disabled = !isValid;
+        }
+
         if (currentStep === 6) {
             const volDisplay = document.getElementById('volume-display');
-            if (volDisplay) volDisplay.textContent = (((config.radiatorArea || 0) * (config.radiatorHeight || 0)).toFixed(1)) + ' m³';
+            if (volDisplay) {
+                const vol = ((config.radiatorArea || 0) * (config.radiatorHeight || 0)).toFixed(1);
+                volDisplay.textContent = vol + ' m³';
+            }
         }
     }
+
     window.setStep = function(step) {
         currentStep = step;
         if (currentStep === 9) calculateResults();
@@ -156,6 +422,7 @@
         renderStep();
         window.scrollTo(0,0);
     }
+
     function validateStep(step) {
         if (step === 1) return !!config.buildingType;
         if (step === 2) return !!config.climaticZone;
@@ -173,34 +440,51 @@
         if (step === 8) return !!config.insulation;
         return true;
     }
+
     function calculateResults() {
         const zone = config.climaticZone;
         const ins = config.insulation;
         const hSystem = config.heatingSystem;
+        
         let power = 0;
-        if (!THERMAL_NEED_M2[zone] || !THERMAL_NEED_M2[zone][ins]) { config.calculatedPower = "Eroare"; return; }
+        let details = "";
+
+        if (!THERMAL_NEED_M2[zone] || !THERMAL_NEED_M2[zone][ins]) {
+            config.calculatedPower = "Eroare";
+            return;
+        }
+
         const wM2 = THERMAL_NEED_M2[zone][ins];
         const wM3 = THERMAL_NEED_M3[zone][ins];
-        if (hSystem === 'Pardoseală') power += (config.floorArea * wM2 * 0.9) / 1000;
-        else if (hSystem === 'Radiatoare' || hSystem === 'Ventiloconvectoare') {
+        
+        if (hSystem === 'Pardoseală') {
+            const p = (config.floorArea * wM2 * 0.9) / 1000;
+            power += p;
+        } else if (hSystem === 'Radiatoare' || hSystem === 'Ventiloconvectoare') {
             const vol = config.radiatorArea * config.radiatorHeight;
             const factor = hSystem === 'Radiatoare' ? 1.0 : 0.95;
-            power += (vol * wM3 * factor) / 1000;
-        }
-        else if (hSystem === 'Mix') {
+            const p = (vol * wM3 * factor) / 1000;
+            power += p;
+        } else if (hSystem === 'Mix') {
             const pFloor = (config.floorArea * wM2 * 0.9) / 1000;
             const vol = config.radiatorArea * config.radiatorHeight;
             const pRad = (vol * wM3 * 1.0) / 1000;
             power += (pFloor || 0) + (pRad || 0);
         }
+
         const winKey = config.windowArea + '-' + config.windowType;
         const winFactor = WINDOW_FACTOR[winKey] || 1.1;
-        power = power * winFactor * 1.1;
+        
+        power = power * winFactor;
+        power = power * 1.1;
+
         config.calculatedPower = isNaN(power) ? "0.00" : power.toFixed(2);
     }
+
     function renderStep() {
         let html = '';
         const isValid = validateStep(currentStep);
+
         if (currentStep === 1) {
             html += `<h3>Pasul 1: Tipul de Clădire</h3>`;
             html += createCard('buildingType', 'Apartament', 'Apartament', '');
@@ -209,75 +493,207 @@
         } 
         else if (currentStep === 2) {
             html += `<h3>Pasul 2: Zona Climatică (NP-048-2000)</h3>`;
-            html += `<div class="city-selector"><label>Selectează Orașul Tău:</label><select id="citySelect" onchange="setCity(this.value)"><option value="">-- Alege din listă --</option>${Object.keys(CITY_ZONES).sort().map(city => `<option value="${city}" ${config.city === city ? 'selected' : ''}>${city} (${CITY_ZONES[city]})</option>`).join('')}</select></div>`;
+            
+            html += `
+            <div class="city-selector">
+                <label style="display:block; margin-bottom:10px;">Selectează Orașului Tău (Determinare Automată):</label>
+                <select id="citySelect" onchange="setCity(this.value)">
+                    <option value="">-- Alege din listă (34+ Orașe) --</option>
+                    ${Object.keys(CITY_ZONES).sort().map(city => 
+                        `<option value="${city}" ${config.city === city ? 'selected' : ''}>${city} (${CITY_ZONES[city]})</option>`
+                    ).join('')}
+                </select>
+            </div>
+            `;
+
             html += `<div class="climatic-zone-map">`;
-            html += createCard('climaticZone', 'Zona I', 'Zona I (-10°C)', 'Constanța, Tulcea', 'zone-I');
-            html += createCard('climaticZone', 'Zona II', 'Zona II (-15°C)', 'Craiova, Timișoara', 'zone-II');
-            html += createCard('climaticZone', 'Zona III', 'Zona III (-18°C)', 'București, Iași', 'zone-III');
-            html += createCard('climaticZone', 'Zona IV', 'Zona IV (-21°C)', 'Cluj, Brașov', 'zone-IV');
-            html += createCard('climaticZone', 'Zona V', 'Zona V (-24°C)', 'Miercurea Ciuc', 'zone-V');
+            html += createCard('climaticZone', 'Zona I', 'Zona I (-10°C)', 'Constanța, Tulcea. Climat Blând.', 'zone-I');
+            html += createCard('climaticZone', 'Zona II', 'Zona II (-15°C)', 'Craiova, Timișoara, Oradea. Moderat.', 'zone-II');
+            html += createCard('climaticZone', 'Zona III', 'Zona III (-18°C)', 'București, Iași, Suceava. Temperat.', 'zone-III');
+            html += createCard('climaticZone', 'Zona IV', 'Zona IV (-21°C)', 'Cluj, Brașov, Rădăuți. Rece.', 'zone-IV');
+            html += createCard('climaticZone', 'Zona V', 'Zona V (-24°C)', 'Miercurea Ciuc, Vatra Dornei. Foarte Rece.', 'zone-V');
             html += `</div>`;
         }
         else if (currentStep === 3) {
             html += `<h3>Pasul 3: Branșament Electric</h3>`;
-            html += createCard('electricConnection', 'Monofazat', 'Monofazat (230V)', 'Standard');
-            html += createCard('electricConnection', 'Trifazat', 'Trifazat (380V)', 'Putere mare');
+            html += createCard('electricConnection', 'Monofazat', 'Monofazat (230V)', 'Branșament standard.');
+            html += createCard('electricConnection', 'Trifazat', 'Trifazat (380V)', 'Putere mare disponibila.');
         }
         else if (currentStep === 4) {
             html += `<h3>Pasul 4: Tip Sistem</h3>`;
-            html += createCard('systemType', 'Split', 'Split', 'Cu freon');
-            html += createCard('systemType', 'Monobloc', 'Monobloc', 'Apă exterior');
-            html += createCard('systemType', 'Hydrosplit', 'Hydrosplit', 'Apă interior');
+            html += createCard('systemType', 'Split', 'Split', 'Exterior + Interior (cu freon).');
+            html += createCard('systemType', 'Monobloc', 'Monobloc', 'Doar exterior (apă). Simplu de instalat.');
+            html += createCard('systemType', 'Hydrosplit', 'Hydrosplit', 'Exterior + Interior (apă). Performanță.');
         }
         else if (currentStep === 5) {
             html += `<h3>Pasul 5: Sistem de Încălzire</h3>`;
-            html += createCard('heatingSystem', 'Pardoseală', 'Pardoseală', 'W/m²');
-            html += createCard('heatingSystem', 'Radiatoare', 'Radiatoare', 'W/m³');
-            html += createCard('heatingSystem', 'Mix', 'Mix', 'Combinat');
-            html += createCard('heatingSystem', 'Ventiloconvectoare', 'Ventiloconvectoare', 'W/m³');
+            html += createCard('heatingSystem', 'Pardoseală', 'Încălzire în Pardoseală', 'Calcul W/m². Eficiență maximă.');
+            html += createCard('heatingSystem', 'Radiatoare', 'Radiatoare Clasice', 'Calcul W/m³ (Volum). Temp ridicată.');
+            html += createCard('heatingSystem', 'Mix', 'Mix Pardoseală + Radiatoare', 'Calcul combinat m² și m³.');
+            html += createCard('heatingSystem', 'Ventiloconvectoare', 'Ventiloconvectoare', 'Calcul W/m³. Răcire eficientă.');
         }
         else if (currentStep === 6) {
             html += `<h3>Pasul 6: Dimensiuni</h3>`;
-            if (!config.heatingSystem) html += '<p class="alert-info">Selectează sistem la pasul anterior</p>';
+            
+            if (!config.heatingSystem) {
+                 html += '<p class="alert-info">Vă rugăm selectați un sistem de încălzire la pasul anterior.</p>';
+            }
             else if (config.heatingSystem === 'Pardoseală') {
-                html += `<div class="dimension-group floor-heating-group"><h4>Pardoseală</h4>${createInput('floorArea', 'Suprafață (m²)', 'ex: 120')}</div>`;
+                html += `<div class="dimension-group floor-heating-group">
+                    <h4>Zonă Pardoseală</h4>
+                    ${createInput('floorArea', 'Suprafață Încălzită (m²)', 'ex: 120')}
+                    <p class="alert-info">Se calculează folosind necesarul specific în W/m².</p>
+                </div>`;
             } else if (config.heatingSystem === 'Radiatoare' || config.heatingSystem === 'Ventiloconvectoare') {
-                html += `<div class="dimension-group radiator-heating-group"><h4>Radiatoare</h4>${createInput('radiatorArea', 'Suprafață (m²)', 'ex: 120')}${createInput('radiatorHeight', 'Înălțime (m)', 'ex: 2.7', true)}<p>Volum: <strong id="volume-display">${((config.radiatorArea || 0) * (config.radiatorHeight || 0)).toFixed(1)} m³</strong></p></div>`;
+                html += `<div class="dimension-group radiator-heating-group">
+                    <h4>Zonă Radiatoare</h4>
+                    ${createInput('radiatorArea', 'Suprafață Încălzită (m²)', 'ex: 120')}
+                    ${createInput('radiatorHeight', 'Înălțime medie (m)', 'ex: 2.7', true)}
+                    <p class="alert-info">Volum calculat: <strong id="volume-display">${((config.radiatorArea || 0) * (config.radiatorHeight || 0)).toFixed(1)} m³</strong>. Se folosește normativul C107 (W/m³).</p>
+                </div>`;
             } else if (config.heatingSystem === 'Mix') {
-                html += `<div class="dimension-group floor-heating-group"><h4>Pardoseală</h4>${createInput('floorArea', 'Suprafață (m²)', 'ex: 60')}</div>`;
-                html += `<div class="dimension-group radiator-heating-group"><h4>Radiatoare</h4>${createInput('radiatorArea', 'Suprafață (m²)', 'ex: 60')}${createInput('radiatorHeight', 'Înălțime (m)', 'ex: 2.7', true)}</div>`;
+                html += `<div class="dimension-group floor-heating-group">
+                    <h4>🟢 Zonă Pardoseală</h4>
+                    ${createInput('floorArea', 'Suprafață Pardoseală (m²)', 'ex: 60')}
+                </div>`;
+                html += `<div class="dimension-group radiator-heating-group">
+                    <h4>🟠 Zonă Radiatoare</h4>
+                    ${createInput('radiatorArea', 'Suprafață Radiatoare (m²)', 'ex: 60')}
+                    ${createInput('radiatorHeight', 'Înălțime medie (m)', 'ex: 2.7', true)}
+                    <p>Volum radiatoare: <strong id="volume-display">${((config.radiatorArea || 0) * (config.radiatorHeight || 0)).toFixed(1)} m³</strong></p>
+                </div>`;
             }
         }
         else if (currentStep === 7) {
-            html += `<h3>Pasul 7: Ferestre</h3>`;
-            html += createCard('windowArea', 'Mică', 'Mică (<10%)', '');
-            html += createCard('windowArea', 'Medie', 'Medie (10-20%)', '');
-            html += createCard('windowArea', 'Mare', 'Mare (>20%)', '');
+            html += `<h3>Pasul 7: Suprafață Vitrată</h3>`;
+            html += `<div class="form-group"><label>Proporție Ferestre</label>`;
+            html += createCard('windowArea', 'Mică', 'Mică (<10%)', 'Ferestre normale.');
+            html += createCard('windowArea', 'Medie', 'Medie (10-20%)', 'Casă luminoasă.');
+            html += createCard('windowArea', 'Mare', 'Mare (>20%)', 'Panoramic / Pereți sticlă.');
+            html += `</div>`;
+            
             if (config.windowArea) {
-                html += createCard('windowType', 'Triplu', 'Triplu', '');
-                html += createCard('windowType', 'Dublu modern', 'Dublu modern', '');
-                html += createCard('windowType', 'Dublu vechi', 'Dublu vechi', '');
-                html += createCard('windowType', 'Simplu', 'Simplu', '');
+                html += `<div class="form-group"><label>Tip Geam</label>`;
+                html += createCard('windowType', 'Triplu', 'Triplu Strat', 'Eficiență maximă.');
+                html += createCard('windowType', 'Dublu modern', 'Dublu (Modern)', 'Termopan standard.');
+                html += createCard('windowType', 'Dublu vechi', 'Dublu (Vechi)', 'Termopan generație veche.');
+                html += createCard('windowType', 'Simplu', 'Simplu', 'Pierderi mari.');
+                html += `</div>`;
             }
         }
         else if (currentStep === 8) {
-            html += `<h3>Pasul 8: Izolație</h3>`;
-            html += createCard('insulation', 'Slabă', 'Slabă', '');
-            html += createCard('insulation', 'Medie', 'Medie', '');
-            html += createCard('insulation', 'Bună', 'Bună', '');
-            html += createCard('insulation', 'Excelentă', 'Excelentă', '');
+            html += `<h3>Pasul 8: Izolație & Opțiuni</h3>`;
+            html += `<div class="form-group"><label>Nivel Izolație Clădire</label>`;
+            html += createCard('insulation', 'Slabă', 'Slabă', 'Zidărie simplă, fără polistiren.');
+            html += createCard('insulation', 'Medie', 'Medie', 'Polistiren 5cm.');
+            html += createCard('insulation', 'Bună', 'Bună', 'Polistiren 10cm, vată.');
+            html += createCard('insulation', 'Excelentă', 'Excelentă', 'NZEB, 15cm+, tripan.');
+            html += `</div>`;
+            
+            html += `<hr>`;
+            html += `<div class="card-option ${config.domesticHotWater ? 'selected' : ''}" onclick="toggleConfig('domesticHotWater')">
+                <h4>Apă Caldă Menajeră (ACM)</h4>
+            </div>`;
+             html += `<div class="card-option ${config.cooling ? 'selected' : ''}" onclick="toggleConfig('cooling')">
+                <h4>Funcție Răcire</h4>
+            </div>`;
         }
         else if (currentStep === 9) {
-            html += `<h3>Rezultate</h3><div class="result-box"><div class="power-display">${config.calculatedPower} kW</div><p style="text-align:center">Putere necesară (cu rezervă 10%)</p></div>`;
+            const volRad = ((config.radiatorArea || 0) * (config.radiatorHeight || 0)).toFixed(1);
+            
+            html += `<h3>Rezultate Configurare</h3>`;
+            
+            html += `<div class="result-box">`;
+            html += `<div class="power-display">${config.calculatedPower} kW</div>`;
+            html += `<p style="text-align:center">Putere termică necesară estimată (Inclusiv rezervă 10%)</p>`;
+            
+            html += `<div class="result-detail">`;
+            html += `<h4>Sumar Date</h4>`;
+            html += `<p><strong>Locație:</strong> ${config.city ? config.city + ' (' + config.climaticZone + ')' : config.climaticZone}</p>`;
+            html += `<p><strong>Sistem:</strong> ${config.heatingSystem}</p>`;
+            if (config.floorArea > 0) html += `<p><strong>Pardoseală:</strong> ${config.floorArea} m²</p>`;
+            if (config.radiatorArea > 0) html += `<p><strong>Radiatoare:</strong> ${config.radiatorArea} m² (${volRad} m³)</p>`;
+            html += `<p><strong>Izolație:</strong> ${config.insulation}</p>`;
+            html += `<p><strong>Branșament:</strong> ${config.electricConnection}</p>`;
+            html += `</div>`;
+
+            html += `<div class="result-detail" style="border-left-color: #28a745;">`;
+            html += `<h4>Detalii Calcul (Conform C107)</h4>`;
+            html += `<p>Necesar specific pardoseală: <strong>${THERMAL_NEED_M2[config.climaticZone][config.insulation]} W/m²</strong></p>`;
+            html += `<p>Necesar specific volum: <strong>${THERMAL_NEED_M3[config.climaticZone][config.insulation]} W/m³</strong></p>`;
+            
+            const winFactor = WINDOW_FACTOR[config.windowArea + '-' + config.windowType];
+            html += `<p>Factor corecție ferestre: <strong>x${winFactor}</strong> (${config.windowArea}, ${config.windowType})</p>`;
+            html += `<p>Factor siguranță: <strong>x1.1</strong></p>`;
+            html += `</div>`;
+            
+            html += `</div>`;
         }
-        html += `<div class="button-group">`;
-        if (currentStep > 1) html += `<button class="btn btn-secondary" onclick="setStep(${currentStep - 1})">Înapoi</button>`;
-        if (currentStep < 9) html += `<button id="btn-next" class="btn btn-primary" onclick="setStep(${currentStep + 1})" ${!isValid ? 'disabled' : ''}>Continuă</button>`;
+
+        html += `<div class="button-group" style="${currentStep === 9 ? 'flex-wrap: wrap; gap: 10px;' : ''}">`;
+        if (currentStep > 1) {
+            html += `<button class="btn btn-secondary" onclick="setStep(${currentStep - 1})">Înapoi</button>`;
+        }
+        if (currentStep < 9) {
+            let btnText = currentStep === 8 ? "Calculează Rezultat" : "Continuă";
+            html += `<button id="btn-next" class="btn btn-primary" onclick="setStep(${currentStep + 1})" ${!isValid ? 'disabled' : ''}>${btnText}</button>`;
+        } else {
+             html += `<div style="display:flex; flex-direction:column; gap:10px; flex:1; margin-left: 10px;">`;
+             html += `<button class="btn btn-primary" onclick="redirectToShop()" style="background-color: #e60000; border-color: #cc0000; width:100%;">🔍 Vezi ofertă CasaInstalatorului.ro</button>`;
+             html += `<button class="btn btn-primary" onclick="redirectToTermohabitat()" style="background-color: #2c3e50; border-color: #1a252f; width:100%;">🔍 Vezi ofertă Termohabitat.ro</button>`;
+             html += `</div>`;
+        }
         html += `</div>`;
+
         stepContainer.innerHTML = html;
     }
+
+    window.redirectToShop = function() {
+        const power = parseFloat(config.calculatedPower);
+        let capacity = 0;
+        
+        if (power <= 4) capacity = 4;
+        else if (power <= 6) capacity = 6;
+        else if (power <= 8) capacity = 8;
+        else if (power <= 10) capacity = 10;
+        else if (power <= 12) capacity = 12;
+        else if (power <= 14) capacity = 14;
+        else if (power <= 16) capacity = 16;
+        else capacity = Math.ceil(power); 
+
+        let systemType = config.systemType ? config.systemType.toLowerCase() : "";
+        if (systemType === 'hydrosplit') systemType = 'split'; 
+
+        const searchTerm = `pompa caldura ${systemType} "${capacity} kW"`;
+        const url = `https://www.casainstalatorului.ro/?s=${encodeURIComponent(searchTerm)}&post_type=product`;
+        window.open(url, '_blank');
+    }
+
+    window.redirectToTermohabitat = function() {
+        const power = parseFloat(config.calculatedPower);
+        let capacity = 0;
+        
+        if (power <= 4) capacity = 4;
+        else if (power <= 6) capacity = 6;
+        else if (power <= 8) capacity = 8;
+        else if (power <= 10) capacity = 10;
+        else if (power <= 12) capacity = 12;
+        else if (power <= 14) capacity = 14;
+        else if (power <= 16) capacity = 16;
+        else capacity = Math.ceil(power); 
+
+        let systemType = config.systemType ? config.systemType.toLowerCase() : "";
+        if (systemType === 'hydrosplit') systemType = 'split'; 
+
+        const searchTerm = `pompa caldura ${systemType} "${capacity} kW"`;
+        const url = `https://termohabitat.ro/?s=${encodeURIComponent(searchTerm)}&post_type=product`;
+        window.open(url, '_blank');
+    }
+
     renderProgressBar();
     renderStep();
+
 </script>
+
 </body>
 </html>
