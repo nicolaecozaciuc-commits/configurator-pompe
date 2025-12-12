@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurator Pompe de Căldură</title>
     <style>
-        /* CSS pentru Design și Funcționalitate */
+        /* --- STILURI CSS (DESIGN) --- */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -25,6 +25,7 @@
         h2 { text-align: center; color: #333; margin-bottom: 30px; }
         h3 { color: #007bff; margin-top: 0; }
         
+        /* Bara de progres */
         .progress-bar {
             display: flex;
             justify-content: space-between;
@@ -76,6 +77,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Carduri Opțiuni */
         .card-option {
             border: 1px solid #ccc;
             padding: 15px;
@@ -104,6 +106,7 @@
             color: #555;
         }
 
+        /* Butoane */
         .button-group {
             margin-top: 30px;
             display: flex;
@@ -150,6 +153,7 @@
             font-size: 0.9em;
         }
 
+        /* Rezultate */
         .result-box {
             background-color: #f8fbff;
             border: 1px solid #cce5ff;
@@ -179,6 +183,7 @@
         .result-detail h4 { margin-top: 0; margin-bottom: 10px; }
         .result-detail p { margin: 5px 0; font-size: 0.95em; }
 
+        /* Hărți și zone */
         .climatic-zone-map {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -243,6 +248,7 @@
             cursor: pointer;
         }
 
+        /* Responsive */
         @media (max-width: 600px) {
             .configurator-container { padding: 15px; }
             .climatic-zone-map { grid-template-columns: 1fr; }
@@ -261,6 +267,7 @@
     <div id="step_container" class="step-content"></div>
 </div>
 
+<!-- --- LOGICA JAVASCRIPT --- -->
 <script>
     const stepContainer = document.getElementById('step_container');
     const progressBar = document.getElementById('progress_bar');
@@ -287,23 +294,41 @@
     };
 
     const CITY_ZONES = {
-        'Constanța': 'Zona I', 'Mangalia': 'Zona I', 'Tulcea': 'Zona I',
-        'Timișoara': 'Zona II', 'Arad': 'Zona II', 'Oradea': 'Zona II', 
-        'Craiova': 'Zona II', 'Drobeta-Turnu Severin': 'Zona II', 'Reșița': 'Zona II', 
-        'Târgu Jiu': 'Zona II', 'Slatina': 'Zona II', 'Alexandria': 'Zona II', 
-        'Giurgiu': 'Zona II', 'Călărași': 'Zona II', 'Slobozia': 'Zona II', 
-        'Brăila': 'Zona II', 'Galați': 'Zona II',
-        'București': 'Zona III', 'Ploiești': 'Zona III', 'Pitești': 'Zona III', 
-        'Târgoviște': 'Zona III', 'Buzău': 'Zona III', 'Focșani': 'Zona III', 
-        'Bacău': 'Zona III', 'Iași': 'Zona III', 'Vaslui': 'Zona III', 
-        'Deva': 'Zona III', 'Alba Iulia': 'Zona III', 'Suceava': 'Zona III',
-        'Cluj-Napoca': 'Zona IV', 'Târgu Mureș': 'Zona IV', 'Sibiu': 'Zona IV', 
-        'Brașov': 'Zona IV', 'Sfântu Gheorghe': 'Zona IV', 'Bistrița': 'Zona IV', 
-        'Zalău': 'Zona IV', 'Satu Mare': 'Zona IV', 'Baia Mare': 'Zona IV', 
-        'Piatra Neamț': 'Zona IV', 'Botoșani': 'Zona IV', 'Rădăuți': 'Zona IV',
-        'Miercurea Ciuc': 'Zona V', 'Vatra Dornei': 'Zona V', 'Toplița': 'Zona V'
+        // --- JUDEȚUL SUCEAVA (COMPLET) ---
+        'Suceava': 'Zona III',
+        'Fălticeni': 'Zona III',
+        'Rădăuți': 'Zona IV',
+        'Câmpulung Moldovenesc': 'Zona V',
+        'Vatra Dornei': 'Zona V',
+        'Gura Humorului': 'Zona IV',
+        'Siret': 'Zona IV',
+        'Solca': 'Zona IV',
+        'Cajvana': 'Zona IV',
+        'Dolhasca': 'Zona III',
+        'Liteni': 'Zona III',
+        'Salcea': 'Zona III',
+        'Milișăuți': 'Zona IV',
+        'Vicovu de Sus': 'Zona IV',
+        'Frasin': 'Zona V',
+        'Broșteni': 'Zona V',
+
+        // --- ALTE ORAȘE IMPORTANTE ---
+        'București': 'Zona III', 'Cluj-Napoca': 'Zona IV', 'Timișoara': 'Zona II', 'Iași': 'Zona III',
+        'Constanța': 'Zona I', 'Craiova': 'Zona II', 'Brașov': 'Zona IV', 'Galați': 'Zona II',
+        'Ploiești': 'Zona III', 'Oradea': 'Zona II', 'Brăila': 'Zona II', 'Arad': 'Zona II',
+        'Pitești': 'Zona III', 'Sibiu': 'Zona IV', 'Bacău': 'Zona III', 'Târgu Mureș': 'Zona IV',
+        'Baia Mare': 'Zona IV', 'Buzău': 'Zona III', 'Botoșani': 'Zona IV', 'Satu Mare': 'Zona IV',
+        'Râmnicu Vâlcea': 'Zona III', 'Drobeta-Turnu Severin': 'Zona II', 'Piatra Neamț': 'Zona IV',
+        'Târgu Jiu': 'Zona II', 'Târgoviște': 'Zona III', 'Focșani': 'Zona III', 'Bistrița': 'Zona IV',
+        'Reșița': 'Zona II', 'Tulcea': 'Zona I', 'Slatina': 'Zona II', 'Călărași': 'Zona II',
+        'Alba Iulia': 'Zona III', 'Giurgiu': 'Zona II', 'Deva': 'Zona III', 'Hunedoara': 'Zona III',
+        'Zalău': 'Zona IV', 'Sfântu Gheorghe': 'Zona IV', 'Bârlad': 'Zona III', 'Vaslui': 'Zona III',
+        'Roman': 'Zona III', 'Slobozia': 'Zona II', 'Turda': 'Zona IV', 'Mediaș': 'Zona IV',
+        'Alexandria': 'Zona II', 'Lugoj': 'Zona II', 'Medgidia': 'Zona I', 'Miercurea Ciuc': 'Zona V',
+        'Sighetu Marmației': 'Zona IV', 'Petroșani': 'Zona V', 'Mangalia': 'Zona I', 'Toplița': 'Zona V'
     };
 
+    // Date tehnice (W/m2 si W/m3 conform C107/NP-048)
     const THERMAL_NEED_M2 = {
         'Zona I': { 'Slabă': 80, 'Medie': 60, 'Bună': 45, 'Excelentă': 30 },
         'Zona II': { 'Slabă': 90, 'Medie': 70, 'Bună': 50, 'Excelentă': 35 },
@@ -447,7 +472,6 @@
         const hSystem = config.heatingSystem;
         
         let power = 0;
-        let details = "";
 
         if (!THERMAL_NEED_M2[zone] || !THERMAL_NEED_M2[zone][ins]) {
             config.calculatedPower = "Eroare";
@@ -469,7 +493,7 @@
             const pFloor = (config.floorArea * wM2 * 0.9) / 1000;
             const vol = config.radiatorArea * config.radiatorHeight;
             const pRad = (vol * wM3 * 1.0) / 1000;
-            power += (pFloor || 0) + (pRad || 0);
+            power += (pFloor || 0) + (pRad || 0); 
         }
 
         const winKey = config.windowArea + '-' + config.windowType;
@@ -496,9 +520,9 @@
             
             html += `
             <div class="city-selector">
-                <label style="display:block; margin-bottom:10px;">Selectează Orașului Tău (Determinare Automată):</label>
+                <label style="display:block; margin-bottom:10px;">Selectează Orașul Tău (Determinare Automată):</label>
                 <select id="citySelect" onchange="setCity(this.value)">
-                    <option value="">-- Alege din listă (34+ Orașe) --</option>
+                    <option value="">-- Alege din listă (${Object.keys(CITY_ZONES).length} Orașe) --</option>
                     ${Object.keys(CITY_ZONES).sort().map(city => 
                         `<option value="${city}" ${config.city === city ? 'selected' : ''}>${city} (${CITY_ZONES[city]})</option>`
                     ).join('')}
@@ -650,8 +674,7 @@
 
     window.redirectToShop = function() {
         const power = parseFloat(config.calculatedPower);
-        let capacity = 0;
-        
+        let capacity = Math.ceil(power);
         if (power <= 4) capacity = 4;
         else if (power <= 6) capacity = 6;
         else if (power <= 8) capacity = 8;
@@ -659,7 +682,6 @@
         else if (power <= 12) capacity = 12;
         else if (power <= 14) capacity = 14;
         else if (power <= 16) capacity = 16;
-        else capacity = Math.ceil(power); 
 
         let systemType = config.systemType ? config.systemType.toLowerCase() : "";
         if (systemType === 'hydrosplit') systemType = 'split'; 
@@ -671,8 +693,7 @@
 
     window.redirectToTermohabitat = function() {
         const power = parseFloat(config.calculatedPower);
-        let capacity = 0;
-        
+        let capacity = Math.ceil(power);
         if (power <= 4) capacity = 4;
         else if (power <= 6) capacity = 6;
         else if (power <= 8) capacity = 8;
@@ -680,7 +701,6 @@
         else if (power <= 12) capacity = 12;
         else if (power <= 14) capacity = 14;
         else if (power <= 16) capacity = 16;
-        else capacity = Math.ceil(power); 
 
         let systemType = config.systemType ? config.systemType.toLowerCase() : "";
         if (systemType === 'hydrosplit') systemType = 'split'; 
@@ -692,7 +712,6 @@
 
     renderProgressBar();
     renderStep();
-
 </script>
 
 </body>
